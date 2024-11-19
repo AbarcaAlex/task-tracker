@@ -1,22 +1,28 @@
 package com.java;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import com.java.model.TaskStatus;
+import com.java.model.Task;
+import com.java.model.TaskDTO;
+import com.java.util.JsonTools;
 
 public class Main {
-    public static void main(String[] args) {
-        
-        int salir = 1;
-        @SuppressWarnings("resource")
-        Scanner scanner = new Scanner(System.in);
+    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private static JsonTools jTools = new JsonTools();
 
+    public static void main(String[] args) {
+        int opcion = 0;
+        int salir = 1;
+
+        if (jTools.loadJson() != null) {
+            tasks = jTools.loadJson();
+        }
+        
         while (salir !=0) {
             
             System.out.printf("""
@@ -31,31 +37,32 @@ public class Main {
                 -----------------------------------
             """);
             
-            int opcion = Integer.parseInt(scanner.nextLine());
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             switch (opcion) {
                 case 1:
                     crearTarea();
                     break;
                 case 2:
-
+                    mostrarTareas();
                     break;
                 case 3:
                     System.out.println("\tAdios...");
                     salir = 0;
                     break;
                 default:
-                    System.out.println("Opción no valida");
+                    System.out.println("\tOpción no valida");
                     break;
             }
         }
-        
-
+        jTools.saveJson(tasks);
     }
 
     public static void crearTarea(){
-        @SuppressWarnings("resource")
-        Scanner scanner = new Scanner(System.in);
 
         System.out.printf("""
             ---------------------------------------------
@@ -64,29 +71,21 @@ public class Main {
 
         String des = scanner.nextLine();
 
-        TaskDTO taskDTO = new TaskDTO(des, Status.todo);
+        TaskDTO taskDTO = new TaskDTO(des, TaskStatus.TODO);
 
         Task task = new Task(taskDTO);
 
-        ObjectMapper om = new ObjectMapper();
-        om.registerModule(new JavaTimeModule());
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        
-        try {
-            String json = om.writeValueAsString(task);
-            
-            try {
-                String path = System.getProperty("user.dir");
-                FileWriter fw = new FileWriter(new File(path+"\\tasks","task.json"));
-                fw.write(json);
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        tasks.add(task);
 
-            System.out.println("\tTarea creada!\t");
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        System.out.println("\tSe creo la nueva tarea!");
+        
+    }
+
+    public static void mostrarTareas(){
+        if (!tasks.isEmpty()) {
+            tasks.stream().forEach(System.out::println);
+        }else{
+            System.out.println("\tNo hay tareas que mostrar..");
         }
         
     }

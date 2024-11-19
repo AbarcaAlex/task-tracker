@@ -1,8 +1,8 @@
-package com.java;
+package com.java.model;
 
 public record TaskDTO(
     String description,
-    Enum<Status> status
+    TaskStatus status
 ) {
 
 }

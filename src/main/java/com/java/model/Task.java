@@ -1,4 +1,4 @@
-package com.java;
+package com.java.model;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ public class Task {
 
     private long id;
     private String description;
-    private Enum<Status> status;
+    private TaskStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -36,8 +36,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task [id=" + id + ", description=" + description + ", status=" + status + ", createdAt=" + createdAt
-                + ", updatedAt=" + updatedAt + "]";
+        return "\t[ " + status.getSpanish() + " ]\t" + description;
     }
 
 }
