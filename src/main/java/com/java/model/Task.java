@@ -28,15 +28,22 @@ public class Task {
         this.updatedAt = null;
     }
 
-    public void updateTask(TaskDTO taskDTO){
-        this.description = taskDTO.description();
-        this.status = taskDTO.status();
+    public void updateDescription(String des){
+        this.description = des;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateStatus(TaskStatus status){
+        this.status = status;
         this.updatedAt = LocalDateTime.now();
     }
 
     @Override
     public String toString() {
-        return "\t[ " + status.getSpanish() + " ]\t" + description;
+        return "[ " + status.getSpanish() + " ]\t-->\t" + description;
     }
 
+    public String toStringFullDetails() {
+        return "\n\t[ " + status.getSpanish() + " ]\n\t" + description + "\n\tCreada el: " + createdAt + "\n\tActualizada el: " + updatedAt;
+    }
 }
