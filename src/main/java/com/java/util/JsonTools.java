@@ -28,16 +28,16 @@ public class JsonTools {
             
             try {
                 String path = System.getProperty("user.dir");
-                new File(path+"\\tasks","tasks.json").createNewFile(); //to-do: necesito probar si esto sirve 
-                FileWriter fw = new FileWriter(new File(path+"\\tasks","tasks.json"));
+                new File(path,"tasks.json").createNewFile(); 
+                FileWriter fw = new FileWriter(new File(path,"tasks.json"));
                 fw.write(json);
                 fw.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                
             }
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -49,14 +49,14 @@ public class JsonTools {
         ArrayList<Task> tasks = null;
        
         try {
-            new File(path+"\\tasks","tasks.json").createNewFile(); //to-do: necesito probar si esto sirve 
-            tasks = om.readValue(new File(path+"\\tasks","tasks.json"), jacksonTypeReference);
+            new File(path,"tasks.json").createNewFile();  
+            tasks = om.readValue(new File(path,"tasks.json"), jacksonTypeReference);
         } catch (StreamReadException e) {
-            e.printStackTrace();
+            
         } catch (DatabindException e) {
-            e.printStackTrace();
+            
         } catch (IOException e) {
-            e.printStackTrace();
+            
         }  
         
         return tasks;
