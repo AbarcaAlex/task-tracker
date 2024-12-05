@@ -3,6 +3,7 @@ package com.java.controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import com.java.model.Task;
 import com.java.model.TaskDTO;
@@ -34,20 +35,96 @@ public class TaskController {
     public void mostrarTareas(ArrayList<Task> tasks){
         
         if (!tasks.isEmpty()) {
+            int filtro = 0;
+            ArrayList<Task> filterTasks = new ArrayList<>();
             while (true) {
                 AtomicInteger atom = new AtomicInteger(1);
-                tasks.stream().forEach(t -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+t+"\n"));
+                filterTasks.clear();
+                switch (filtro) {
+                    case 1:
+                        System.out.printf("""
+                            -------------------------------------------------------------
+                            |   Filtro aplicado: Mostrando solo las tareas POR HACER    |
+                            -------------------------------------------------------------
+                        """);
+                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.TODO)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        if (filterTasks.isEmpty()) {
+                            System.out.println("No hay tareas que mostrar..");
+                        }else{
+                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                        }
+                        break;
+                    case 2:
+                        System.out.printf("""
+                            -------------------------------------------------------------
+                            |   Filtro aplicado: Mostrando solo las tareas EN PROGRESO  |
+                            -------------------------------------------------------------
+                        """);
+                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.INPROGRESS)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        if (filterTasks.isEmpty()) {
+                            System.out.println("No hay tareas que mostrar..");
+                        }else{
+                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                        }
+                        break;
+                    case 3:
+                        System.out.printf("""
+                            -------------------------------------------------------------
+                            |   Filtro aplicado: Mostrando solo las tareas FINALIZADAS  |
+                            -------------------------------------------------------------
+                        """);
+                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.DONE)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        if (filterTasks.isEmpty()) {
+                            System.out.println("No hay tareas que mostrar..");
+                        }else{
+                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                        }
+                        break;
+                    default:
+                        System.out.printf("""
+                            ---------------------------------
+                            |   Mostrando TODAS las tareas  |
+                            ---------------------------------
+                        """);
+                        tasks.stream().forEach(t -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+t+"\n"));
+                        break;
+                }
                 System.out.printf("""
                     -----------------------------------------------------
                     |   ? - Numero de la tarea para ver más detalles    |
+                    |  -1 - Filtrar tareas                              |
                     |   0 - Regresar                                    |
                     -----------------------------------------------------
                 """);
-                int index = CheckScannerEntry.recibirNumero();
+                int index = CheckScannerEntry.recibirNumero(); 
 
-                if (index != 0) {
+                if (index != 0 && index != -1) {
                     index--;
-                    detallarTarea(index, tasks);
+                    if (filtro == 0) {
+                        detallarTarea(index, tasks);
+                    }else{
+                        detallarTarea(index, filterTasks);
+                    }
+                    
+                }else if(index == -1){
+                    while (true) {
+                        System.out.printf("""
+                            ---------------------------------------------
+                            |   1 - Mostrar solo tareas POR HACER       |    
+                            |   2 - Mostrar solo tareas EN PROGRESO     |    
+                            |   3 - Mostrar solo tareas FINALIZADAS     |    
+                            |   4 - Mostrar TODAS las tareas            |
+                            ---------------------------------------------
+                        """);
+                        filtro = CheckScannerEntry.recibirNumero();
+                        if (filtro >= 1 && filtro <= 4) {
+                            break;
+                        }else{
+                            System.out.println("Opción no valida");
+                        }
+                    }
+                    
+                    
                 }else{
                     break;
                 }
