@@ -99,6 +99,7 @@ public class TaskController {
             ---------------------------------
             |   1 - Cambiar la descripción  |
             |   2 - Cambiar el estado       | 
+            |   3 - Regresar                |
             ---------------------------------
         """);
 
@@ -139,6 +140,9 @@ public class TaskController {
                         System.out.println("Opción no valida");
                         break;
                 }
+                break;
+            case 3:
+
                 break;
             default:
                 System.out.println("Opción no valida");

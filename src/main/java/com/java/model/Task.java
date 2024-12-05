@@ -44,6 +44,6 @@ public class Task {
     }
 
     public String toStringFullDetails() {
-        return "\n\t[ " + status.getSpanish() + " ]\n\t" + description + "\n\tCreada el: " + createdAt + "\n\tActualizada el: " + updatedAt;
+        return "\n\t[ " + status.getSpanish() + " ]\n\t" + description + "\n\tCreada el: " + createdAt + "\n\tActualizada el: " + updatedAt + "\n";
     }
 }
