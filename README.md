@@ -1,6 +1,6 @@
 # TASK TRACKER
 
-<img src='https://badgen.net/badge/Status/On-hold?color=yellow'/> <img src='https://badgen.net/badge/Version/1.1?color=blue'/>
+<img src='https://badgen.net/badge/DevelopmentStatus/On-hold?color=yellow'/> <img src='https://badgen.net/badge/Version/1.1?color=blue'/>
 
 <br>
 <b>(Rastreador de tareas)</b> es un programa que utiliza la interfaz de linea de comandos (CLI) para ayudarte a llevar un registro y seguimiento de tus tareas. Crea, actualiza y elimina todas las tareas que necesites.
