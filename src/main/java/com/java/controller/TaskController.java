@@ -47,11 +47,13 @@ public class TaskController {
                             |   Filtro aplicado: Mostrando solo las tareas POR HACER    |
                             -------------------------------------------------------------
                         """);
-                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.TODO)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        tasks.stream()
+                            .filter(t -> t.getStatus().equals(TaskStatus.TODO))
+                            .forEach(t -> filterTasks.add(t));
                         if (filterTasks.isEmpty()) {
                             System.out.println("No hay tareas que mostrar..");
                         }else{
-                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                            filterTasks.forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
                         }
                         break;
                     case 2:
@@ -60,11 +62,13 @@ public class TaskController {
                             |   Filtro aplicado: Mostrando solo las tareas EN PROGRESO  |
                             -------------------------------------------------------------
                         """);
-                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.INPROGRESS)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        tasks.stream()
+                            .filter(t -> t.getStatus().equals(TaskStatus.INPROGRESS))
+                            .forEach(t -> filterTasks.add(t));
                         if (filterTasks.isEmpty()) {
                             System.out.println("No hay tareas que mostrar..");
                         }else{
-                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                            filterTasks.forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
                         }
                         break;
                     case 3:
@@ -73,11 +77,14 @@ public class TaskController {
                             |   Filtro aplicado: Mostrando solo las tareas FINALIZADAS  |
                             -------------------------------------------------------------
                         """);
-                        tasks.stream().filter(t -> t.getStatus().equals(TaskStatus.DONE)).map(t -> filterTasks.add(t)).collect(Collectors.toList());
+                        tasks.stream()
+                            .filter(t -> t.getStatus().equals(TaskStatus.DONE))
+                            .forEach(t -> filterTasks.add(t));
+
                         if (filterTasks.isEmpty()) {
                             System.out.println("No hay tareas que mostrar..");
-                        }else{
-                            filterTasks.stream().forEach(ft -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+ft+"\n"));
+                        } else {
+                            filterTasks.forEach(ft -> System.out.println("\n\t" + atom.getAndIncrement() + " - " + ft + "\n"));
                         }
                         break;
                     default:
@@ -86,7 +93,7 @@ public class TaskController {
                             |   Mostrando TODAS las tareas  |
                             ---------------------------------
                         """);
-                        tasks.stream().forEach(t -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+t+"\n"));
+                        tasks.forEach(t -> System.out.println("\n\t"+atom.getAndIncrement()+" - "+t+"\n"));
                         break;
                 }
                 System.out.printf("""
